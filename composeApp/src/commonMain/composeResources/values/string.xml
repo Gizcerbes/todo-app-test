@@ -40,5 +40,6 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="close">Close</string>
+    <string name="delete">Delete</string>
 
 </resources>

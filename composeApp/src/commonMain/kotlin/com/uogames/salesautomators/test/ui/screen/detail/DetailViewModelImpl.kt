@@ -8,12 +8,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class DetailViewModelImpl(
-    val taskRepository: TaskRepository
+    private val taskRepository: TaskRepository
 ) : DetailViewModel() {
 
     private var task: Task? = null
 
     private var saveJob: Job? = null
+    private var deleteJob: Job? = null
 
     override fun set(task: Task) {
         this.task = task
@@ -27,5 +28,13 @@ class DetailViewModelImpl(
                 ?.also { taskRepository.save(it) }
         }
         saveJob?.join()
+    }
+
+    override suspend fun delete() {
+        deleteJob?.cancel()
+        deleteJob = viewModelScope.launch {
+            task?.let { taskRepository.delete(it) }
+        }
+        deleteJob?.join()
     }
 }

@@ -36,8 +36,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
-            //implementation("androidx.compose.material3:material3:1.3.0-beta03")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -75,7 +73,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = libs.versions.appVersion.get()
     }
     packaging {
         resources {
@@ -114,4 +112,8 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+tasks.register("version"){
+    println(libs.versions.appVersion.get())
 }

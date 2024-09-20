@@ -11,4 +11,6 @@ abstract class DetailViewModel: ViewModel() {
 
     abstract suspend fun changeStatus(status: TaskStatus)
 
+    abstract suspend fun delete()
+
 }

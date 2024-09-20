@@ -57,6 +57,8 @@ import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import salesautomator_test.composeapp.generated.resources.Res
 import salesautomator_test.composeapp.generated.resources.arrow_back_24px
+import salesautomator_test.composeapp.generated.resources.delete
+import salesautomator_test.composeapp.generated.resources.delete_24px
 import salesautomator_test.composeapp.generated.resources.detail_title
 import salesautomator_test.composeapp.generated.resources.edit
 import salesautomator_test.composeapp.generated.resources.edit_24px
@@ -75,6 +77,7 @@ object ScreenDetail {
         vm: DetailViewModel = viewModel { ViewModelModule.detailVM },
         modifier: Modifier = Modifier.fillMaxSize()
     ) {
+        val scope = rememberCoroutineScope()
         vm.set(task)
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
@@ -95,11 +98,20 @@ object ScreenDetail {
                     },
                     actions = {
                         TextButton(
+                            icon = painterResource(Res.drawable.delete_24px),
+                            text = stringResource(Res.string.delete),
+                            onClick = {
+                                scope.launch {
+                                    vm.delete()
+                                    onBack()
+                                }
+                            }
+                        )
+                        TextButton(
                             icon = painterResource(Res.drawable.edit_24px),
                             text = stringResource(Res.string.edit),
                             onClick = {
                                 onEdit(task)
-                                // scope.launch { if (vm.save()) onBack() }
                             }
                         )
                     },
