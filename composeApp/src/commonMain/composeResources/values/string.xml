@@ -1,0 +1,44 @@
+<resources>
+    <string-array name="task_statuses">
+        <item>In progress</item>
+        <item>Completed</item>
+        <item>Canceled</item>
+    </string-array>
+    <string name="status">Status</string>
+    <string name="home_screen_title">Home</string>
+    <string name="add">Add</string>
+    <string name="filters">Filters</string>
+    <string name="empty">Empty</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="task_editor_title">Task Editor</string>
+    <string name="detail_title">Detail</string>
+    <string-array name="date_time">
+        <item>Year</item>
+        <item>Month</item>
+        <item>Day</item>
+        <item>Hour</item>
+        <item>Minute</item>
+    </string-array>
+    <string-array name="time_format">
+        <item>12-hour</item>
+        <item>24-hour</item>
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+    <string name="data_and_time_of_execution">*Date and time of Execution</string>
+    <string name="title">*Title</string>
+    <string name="location">*Location</string>
+    <string name="description">Description</string>
+    <string-array name="add_task_errors">
+        <item>The title must contain from 1 to 15 characters</item>
+        <item>The location must contain from 1 to 90 characters</item>
+        <item>You can't set a time that has already happened</item>
+    </string-array>
+    <string name="time_of_execution_label">Execution at:</string>
+    <string name="created_at_label">Created at:</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="close">Close</string>
+
+</resources>
