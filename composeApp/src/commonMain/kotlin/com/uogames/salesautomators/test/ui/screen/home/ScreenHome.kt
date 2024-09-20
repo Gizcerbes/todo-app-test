@@ -28,10 +28,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -45,6 +47,7 @@ import com.uogames.selesautomators.test.common.model.SortType
 import com.uogames.selesautomators.test.common.model.Task
 import com.uogames.selesautomators.test.common.model.TaskStatus
 import com.uogames.selesautomators.test.common.model.TimeSort
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
@@ -60,6 +63,10 @@ import salesautomator_test.composeapp.generated.resources.empty
 import salesautomator_test.composeapp.generated.resources.filter_list_24px
 import salesautomator_test.composeapp.generated.resources.filters
 import salesautomator_test.composeapp.generated.resources.home_screen_title
+import salesautomator_test.composeapp.generated.resources.save_24px
+import salesautomator_test.composeapp.generated.resources.sort
+import salesautomator_test.composeapp.generated.resources.sort_24px
+import salesautomator_test.composeapp.generated.resources.status
 import salesautomator_test.composeapp.generated.resources.task_statuses
 import salesautomator_test.composeapp.generated.resources.time_of_execution_label
 
@@ -76,6 +83,7 @@ object ScreenHome {
 
         val list by vm.taskList.collectAsState()
         var filterDialog by remember { mutableStateOf(false) }
+        var sortDialog by remember { mutableStateOf(false) }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -100,6 +108,11 @@ object ScreenHome {
                                 icon = painterResource(Res.drawable.filter_list_24px),
                                 text = stringResource(Res.string.filters),
                                 onClick = { filterDialog = true }
+                            )
+                            TextButton(
+                                icon = painterResource(Res.drawable.sort_24px),
+                                text = stringResource(Res.string.sort),
+                                onClick = { sortDialog = true }
                             )
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -137,11 +150,19 @@ object ScreenHome {
             filterDialog(vm, onDispose = { filterDialog = false })
         }
 
+        AnimatedVisibility(
+            visible = sortDialog,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            sortDialog(vm, onDispose = { sortDialog = false })
+        }
+
 
     }
 
     @Composable
-    private fun filterDialog(
+    private fun sortDialog(
         vm: HomeScreenViewModel,
         onDispose: () -> Unit
     ) {
@@ -157,14 +178,10 @@ object ScreenHome {
                 Column(
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text(stringResource(Res.string.filters), style = MaterialTheme.typography.h6)
-                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(stringResource(Res.string.sort), style = MaterialTheme.typography.h6)
+                    Spacer(modifier = Modifier.size(16.dp))
                     val order by vm.timeSort.collectAsState()
                     val sortType by vm.typeSort.collectAsState()
-
-                    LaunchedEffect(sortType){
-                        println(sortType)
-                    }
                     Row(
                         modifier = Modifier.align(Alignment.End)
                     ) {
@@ -174,37 +191,73 @@ object ScreenHome {
                             TextButton(
                                 text = stringResource(Res.string.time_of_execution_label),
                                 onClick = { vm.typeSort.value = SortType.EXECUTION_AT },
-                                tintColor = if (sortType == SortType.EXECUTION_AT) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface,
+                                tintColor = if (sortType == SortType.EXECUTION_AT) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
+                                backgroundColor = if (sortType == SortType.EXECUTION_AT) MaterialTheme.colors.primary else Color.Unspecified,
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Spacer(modifier = Modifier.size(8.dp))
                             TextButton(
                                 text = stringResource(Res.string.created_at_label),
                                 onClick = { vm.typeSort.value = SortType.CREATED_AT },
-                                tintColor = if (sortType == SortType.CREATED_AT) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface,
+                                tintColor = if (sortType == SortType.CREATED_AT) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
+                                backgroundColor = if (sortType == SortType.CREATED_AT) MaterialTheme.colors.primary else Color.Unspecified,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
+                        Spacer(modifier = Modifier.size(8.dp))
                         Column(
                             modifier = Modifier.weight(1f)
                         ) {
                             TextButton(
                                 text = stringResource(Res.string.ascending),
                                 onClick = { vm.timeSort.value = TimeSort.ASC },
-                                tintColor = if (order == TimeSort.ASC) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface,
+                                tintColor = if (order == TimeSort.ASC) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
+                                backgroundColor = if (order == TimeSort.ASC) MaterialTheme.colors.primary else Color.Unspecified,
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Spacer(modifier = Modifier.size(8.dp))
                             TextButton(
                                 text = stringResource(Res.string.descending),
                                 onClick = { vm.timeSort.value = TimeSort.DESC },
-                                tintColor = if (order == TimeSort.DESC) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface,
+                                tintColor = if (order == TimeSort.DESC) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
+                                backgroundColor = if (order == TimeSort.DESC) MaterialTheme.colors.primary else Color.Unspecified,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
 
                     }
-                    Spacer(modifier = Modifier.size(8.dp))
+                    Spacer(modifier = Modifier.size(16.dp))
+                    TextButton(
+                        text = stringResource(Res.string.close),
+                        onClick = onDispose,
+                        modifier = Modifier.align(Alignment.End),
+                        backgroundColor = MaterialTheme.colors.primary
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun filterDialog(
+        vm: HomeScreenViewModel,
+        onDispose: () -> Unit
+    ) {
+        val scope = rememberCoroutineScope()
+        Dialog(
+            onDismissRequest = onDispose
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(200.dp)
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text(stringResource(Res.string.filters), style = MaterialTheme.typography.h6)
+                    Spacer(modifier = Modifier.size(16.dp))
                     val taskStatuses = stringArrayResource(Res.array.task_statuses)
                     val status by vm.statusFilter.collectAsState()
                     Row(
@@ -276,9 +329,10 @@ object ScreenHome {
                         Text(text = taskStatuses[1], style = MaterialTheme.typography.button)
                     }
 
+                    Spacer(modifier = Modifier.size(16.dp))
                     TextButton(
                         text = stringResource(Res.string.close),
-                        onClick = onDispose,
+                        onClick = { scope.launch { onDispose() } },
                         modifier = Modifier.align(Alignment.End),
                         backgroundColor = MaterialTheme.colors.primary
                     )

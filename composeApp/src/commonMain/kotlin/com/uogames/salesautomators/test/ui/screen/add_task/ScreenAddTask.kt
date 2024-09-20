@@ -144,6 +144,7 @@ object ScreenAddTask {
                             Text(stringResource(Res.string.title))
                         },
                         isError = !titleError.isNullOrEmpty(),
+                        maxLines = 1,
                         modifier = Modifier.padding(8.dp)
                     )
                 }
@@ -158,6 +159,7 @@ object ScreenAddTask {
                             Text(stringResource(Res.string.location))
                         },
                         isError = !locationError.isNullOrEmpty(),
+                        maxLines = 2,
                         modifier = Modifier.padding(8.dp)
                     )
                 }

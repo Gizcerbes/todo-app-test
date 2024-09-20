@@ -31,8 +31,8 @@
     <string name="location">*Location</string>
     <string name="description">Description</string>
     <string-array name="add_task_errors">
-        <item>The title must contain from 1 to 15 characters</item>
-        <item>The location must contain from 1 to 90 characters</item>
+        <item>The title must contain from 1 to 20 characters</item>
+        <item>The location must contain from 1 to 120 characters</item>
         <item>You can't set a time that has already happened</item>
     </string-array>
     <string name="time_of_execution_label">Execution at:</string>
@@ -41,5 +41,6 @@
     <string name="descending">Descending</string>
     <string name="close">Close</string>
     <string name="delete">Delete</string>
+    <string name="sort">Sort</string>
 
 </resources>

@@ -18,7 +18,10 @@ object ColorList {
             surface = Color(0xFFDCDCDC),
             onSurface = Color.Black,
 
-            )
+            error = Color(0xFFFFA500),
+
+
+        )
 
 }
 

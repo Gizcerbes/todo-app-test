@@ -21,9 +21,9 @@ class AddTaskViewModelImpl(
 ) : AddTaskViewModel() {
 
     override val titleError: StateFlow<String?> = title.map {
-        val it = it.trim()
+        val it = it.clear()
         val errorArray = getStringArray(Res.array.add_task_errors)
-        if (!(1..15).contains(it.length)) errorArray[0]
+        if (!(1..20).contains(it.length)) errorArray[0]
         else null
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -36,7 +36,7 @@ class AddTaskViewModelImpl(
     override val locationError: StateFlow<String?> = location.map {
         val it = it.trim()
         val errorArray = getStringArray(Res.array.add_task_errors)
-        if (!(1..90).contains(it.length)) errorArray[1]
+        if (!(1..120).contains(it.length)) errorArray[1]
         else null
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -54,10 +54,10 @@ class AddTaskViewModelImpl(
                 location.value = ""
             }
             else -> {
-                title.value = task.title
-                description.value = task.description
+                title.value = task.title.clear()
+                description.value = task.description.trim()
                 time.value = task.endDateAndTimeUTC
-                location.value = task.location
+                location.value = task.location.clear()
             }
         }
 
@@ -82,6 +82,13 @@ class AddTaskViewModelImpl(
         }
         saveJob?.join()
         return true
+    }
+
+
+    private fun String.clear(): String{
+        return replace("\n", " ")
+            .replace("  ", " ")
+            .trim()
     }
 
 
