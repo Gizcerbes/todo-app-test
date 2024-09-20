@@ -15,7 +15,7 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 
 
 ## Video Demo
-[![Everything Is AWESOME](https://github.com/user-attachments/assets/36fc1ba7-ebf4-4dfa-9207-31765cb812b4)]([https://youtu.be/nQh08gP01Uk](https://youtu.be/wTF6fYddYYU))
+[![Everything Is AWESOME](https://github.com/user-attachments/assets/36fc1ba7-ebf4-4dfa-9207-31765cb812b4)](https://youtu.be/wTF6fYddYYU)
 
 ## Application Functionality
 
