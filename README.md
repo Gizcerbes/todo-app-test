@@ -12,3 +12,34 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+
+## Video Demo
+[![Everything Is AWESOME](https://github.com/user-attachments/assets/36fc1ba7-ebf4-4dfa-9207-31765cb812b4)]([https://youtu.be/nQh08gP01Uk](https://youtu.be/wTF6fYddYYU))
+
+## Application Functionality
+
+* Add Tasks
+
+* Display task list
+
+* Manage tasks
+
+## Task managment 
+* Mark task as "In Progress", "Completed", or "Cancelled"
+
+*  Delete task
+
+*  View detailed information about the task
+  
+
+#### It use local Room Database (Local Storage) and save tasks.
+
+#### Validate input data
+
+####  Ability to sort tasks by date added or expected time
+
+#### Ability to filter tasks by status
+
+
+
